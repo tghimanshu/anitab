@@ -5,10 +5,18 @@
   "type": "module",
   "scripts": {
     "dev": "tsc && vite build --watch",
-    "build": "tsc"
+    "build": "tsc && vite build"
   },
   "devDependencies": {
+    "@types/react": "^18.0.35",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^3.1.0",
+    "chrome-types": "^0.1.184",
     "typescript": "^4.9.3",
     "vite": "^4.2.0"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

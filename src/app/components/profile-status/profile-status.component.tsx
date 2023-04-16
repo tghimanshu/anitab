@@ -49,9 +49,11 @@ export const ProfileStatus = (props: { todos: Todo[] }) => {
     } else if (userName.toLowerCase().includes("alterok")) {
       localStorage.setItem("group", "alterok");
     } else if (userName.toLowerCase().includes("spectreseek")) {
-      localStorage.setItem("group", "spectreseek");
+      localStorage.setItem("g/assetsroup", "spectreseek");
     } else if (userName.toLowerCase().includes("erevald")) {
       localStorage.setItem("group", "erevald");
+    } else {
+      localStorage.setItem("group", "none");
     }
     setIsEditing(false);
   };
@@ -60,7 +62,7 @@ export const ProfileStatus = (props: { todos: Todo[] }) => {
     <section className="profile-status">
       <h1 className="profile-status__title">Your Rank</h1>
       <img
-        src={`../${getAvatar()}.png`}
+        src={`./assets/${getAvatar()}.png`}
         width={100}
         className="profile-status__image"
         alt=""

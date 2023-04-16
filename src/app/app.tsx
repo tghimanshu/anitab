@@ -32,18 +32,18 @@ export const App = () => {
     if (group) {
       switch (group) {
         case "gaudmire":
-          return "url(../gaudmire.webp)";
+          return "url(./assets/gaudmire.webp)";
         case "spectreseek":
-          return "url(../spectreseek.webp)";
+          return "url(./assets/spectreseek.webp)";
         case "erevald":
-          return "url(../erevald.webp)";
+          return "url(./assets/erevald.webp)";
         case "alterok":
-          return "url(../alterok.webp)";
+          return "url(./assets/alterok.webp)";
         default:
-          return "url(../background.webp)";
+          return "url(./assets/background.jpg)";
       }
     } else {
-      return "url(../background.jpg)";
+      return "url(./assets/background.jpg)";
     }
   };
 

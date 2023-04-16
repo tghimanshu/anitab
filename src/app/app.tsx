@@ -7,6 +7,7 @@ export const App = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [isAdd, setisAdd] = useState(false);
   const [isNW, setIsNW] = useState(false);
+  const [isInGrp, setIsInGrp] = useState(false);
 
   useEffect(() => {
     setTodos(loadTodos());
@@ -28,8 +29,8 @@ export const App = () => {
 
   const getBackgroundImage = () => {
     let group = localStorage.getItem("group");
-    console.log(group);
     if (group) {
+      setIsInGrp(true);
       switch (group) {
         case "gaudmire":
           return "url(./assets/gaudmire.webp)";
@@ -62,22 +63,24 @@ export const App = () => {
         onCompleteTodo={onCompleteTodo}
       />
       <ProfileStatus todos={todos} />
-      <div className="nights-weekends">
-        <button
-          className="nights-weekends__toggler"
-          onClick={() => {
-            setIsNW(!isNW);
-          }}
-        >
-          Switch to {isNW ? "AniTab" : "N&W"}
-        </button>
-        {isNW && (
-          <iframe
-            src="https://buildspace.so/home"
-            className="nights-weekends__content"
-          ></iframe>
-        )}
-      </div>
+      {isInGrp && (
+        <div className="nights-weekends">
+          <button
+            className="nights-weekends__toggler"
+            onClick={() => {
+              setIsNW(!isNW);
+            }}
+          >
+            Switch to {isNW ? "AniTab" : "N&W"}
+          </button>
+          {isNW && (
+            <iframe
+              src="https://buildspace.so/home"
+              className="nights-weekends__content"
+            ></iframe>
+          )}
+        </div>
+      )}
     </div>
   );
 };

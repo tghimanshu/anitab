@@ -3,6 +3,12 @@
   "name": "Anitab - Weebs Paradise",
   "description": "Get all you want in your new tab!",
   "version": "0.0.1",
+  "icons": {
+    "16": "assets/logo.png",
+    "32": "assets/logo.png",
+    "48": "assets/logo.png",
+    "128": "assets/logo.png"
+  },
   "chrome_url_overrides": {
     "newtab": "index.html"
   }

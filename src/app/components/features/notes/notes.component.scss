@@ -1,0 +1,138 @@
+/* notes */
+.notes {
+  background: white;
+  padding: 0 15px;
+  border-radius: 5px;
+  margin: 15px;
+  width: 40vw;
+
+  &__container {
+    padding-bottom: 10px;
+    overflow-y: auto;
+    max-height: 20rem;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    text-align: center;
+    padding: 15px;
+  }
+
+  &__add {
+    font-size: 1.5rem;
+  }
+
+  &__empty {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+}
+
+.note {
+  padding: 10px;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin-bottom: 5px;
+
+  &.completed {
+    background-color: green;
+    color: white;
+  }
+
+  &__section {
+    margin-bottom: 5px;
+  }
+
+  &__title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    // text-decoration: line-through;
+  }
+
+  &__divider {
+    margin-bottom: 10px;
+    // text-decoration: line-through;
+  }
+
+  &__note {
+    font-size: 0.9rem;
+    // text-decoration: line-through;
+  }
+}
+
+/* Add notes */
+
+.add-notes {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__container {
+    // width: 50vw;
+    background-color: white;
+    padding: 15px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 25px;
+  }
+
+  &__title {
+    text-align: center;
+  }
+
+  &__close {
+    font-size: 1.5rem;
+  }
+
+  &__input-title {
+    width: 100%;
+    padding: 5px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  &__input-priority {
+    width: 100%;
+    padding: 5px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  &__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  &__submit,
+  &__cancel {
+    padding: 10px;
+    border: none;
+  }
+
+  &__submit {
+    background: var(--primary-color);
+    border: 1px solid var(--primary-color);
+  }
+
+  &__cancel {
+    border: 1px solid black;
+  }
+}

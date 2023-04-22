@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AiFillCheckCircle,
   AiOutlineCloseCircle,
   AiOutlinePlus,
 } from "react-icons/ai";
-import { Todo, addTodo } from "../../services/todos/todos.service";
+import {
+  Todo,
+  addTodo,
+  completeTodo,
+  loadTodos,
+} from "../../../services/todos/todos.service";
 import "./todos.component.scss";
+import { ProfileStatus } from "../profile-status/profile-status.component";
 
 const AddTodo = (props: { setIsAdd: (arg0: boolean) => void }) => {
   const [title, setTitle] = useState("");
@@ -123,5 +129,41 @@ export const Todos = (props: {
       </div>
       {isAdd && <AddTodo setIsAdd={setIsAdd} />}
     </section>
+  );
+};
+
+export const TodosContainer = () => {
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [isAdd, setisAdd] = useState(false);
+  const [isNW, setIsNW] = useState(false);
+
+  useEffect(() => {
+    setTodos(loadTodos());
+  }, [isAdd]);
+
+  useEffect(() => {
+    setTodos(loadTodos());
+  }, [todos]);
+
+  const onCompleteTodo = (index: number) => {
+    completeTodo(index);
+    setTodos((prev) => {
+      let data = [...prev];
+      let i = prev.findIndex((todo) => todo.index === index);
+      data[i].completed = !data[i].completed;
+      return data;
+    });
+  };
+  return (
+    <>
+      <Todos
+        todos={todos}
+        setTodos={setTodos}
+        isAdd={isAdd}
+        setIsAdd={setisAdd}
+        onCompleteTodo={onCompleteTodo}
+      />
+      <ProfileStatus todos={todos} />
+    </>
   );
 };

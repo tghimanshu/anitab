@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./profile-status.component.scss";
-import { Todo } from "../../services/todos/todos.service";
+import { Todo } from "../../../services/todos/todos.service";
 import { FiCheck, FiEdit2 } from "react-icons/fi";
 
 export const ProfileStatus = (props: { todos: Todo[] }) => {

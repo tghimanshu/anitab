@@ -1,30 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Todos } from "./components/todos/todos.component";
-import { ProfileStatus } from "./components/profile-status/profile-status.component";
+import { TodosContainer } from "./components/features/todos/todos.component";
+import { ProfileStatus } from "./components/features/profile-status/profile-status.component";
 import { Todo, completeTodo, loadTodos } from "./services/todos/todos.service";
+import { NotesContainer } from "./components/features/notes/notes.component";
+// import React from "react";
+// import DropDrag from "./layouts/GridLayout";
 
 export const App = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [isAdd, setisAdd] = useState(false);
   const [isNW, setIsNW] = useState(false);
-
-  useEffect(() => {
-    setTodos(loadTodos());
-  }, [isAdd]);
-
-  useEffect(() => {
-    setTodos(loadTodos());
-  }, [todos]);
-
-  const onCompleteTodo = (index: number) => {
-    completeTodo(index);
-    setTodos((prev) => {
-      let data = [...prev];
-      let i = prev.findIndex((todo) => todo.index === index);
-      data[i].completed = !data[i].completed;
-      return data;
-    });
-  };
 
   const getBackgroundImage = () => {
     let group = localStorage.getItem("group");
@@ -53,14 +36,8 @@ export const App = () => {
         background: `${getBackgroundImage()} no-repeat center center/cover`,
       }}
     >
-      <Todos
-        todos={todos}
-        setTodos={setTodos}
-        isAdd={isAdd}
-        setIsAdd={setisAdd}
-        onCompleteTodo={onCompleteTodo}
-      />
-      <ProfileStatus todos={todos} />
+      <TodosContainer />
+      <NotesContainer />
       <div className="nights-weekends">
         {localStorage.getItem("group") &&
           localStorage.getItem("group") !== "none" && (
@@ -83,3 +60,11 @@ export const App = () => {
     </div>
   );
 };
+
+// export const App = () => {
+//   return (
+//     <div>
+//       <DropDrag domElements={[]} />
+//     </div>
+//   );
+// };

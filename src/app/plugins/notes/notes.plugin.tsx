@@ -10,7 +10,7 @@ export const Notes = () => {
   return (
     <section className="notes">
       <div className="notes__header">
-        <h1 className="notes__title">Notes</h1>
+        <h1 className="notes__title drag-handle">Notes</h1>
         <AiOutlinePlus
           className="notes__add"
           onClick={() => dispatch(openAddNote())}

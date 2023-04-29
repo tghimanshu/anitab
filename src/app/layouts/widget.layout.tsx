@@ -1,17 +1,25 @@
 import React from "react";
+import "./widget.layout.scss";
 
-export const WidgetLayout = ({ children }: Props) => {
+export const WidgetLayout = ({ children, actions, title }: Props) => {
   return (
-    <div
-      style={{
-        background: "red",
-      }}
-    >
-      {children}
-    </div>
+    <section className="widget">
+      <div className="widget__header">
+        <h1 className="widget__title drag-handle">{title}</h1>
+        {actions()}
+      </div>
+      <div className="widget__content">{children}</div>
+    </section>
   );
 };
 
+// type Props = {
+//   children: string | JSX.Element | JSX.Element[] | null;
+//   actions: any;
+// };
+
 type Props = {
-  children: string | JSX.Element | JSX.Element[] | null;
+  children: any;
+  actions: any;
+  title: string;
 };

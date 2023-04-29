@@ -3,7 +3,7 @@ export interface Note {
   index: number;
   title: string;
   note: string;
-  createdDate: Date;
+  createdDate: string;
   archived: boolean;
 }
 
@@ -30,8 +30,16 @@ const noteSlice = createSlice({
       state.notes.push(action.payload);
       localStorage.setItem("notes", JSON.stringify(state));
     },
+    deleteNote(state, action: PayloadAction<Note>) {
+      let i = state.notes.findIndex(
+        (note) => note.index === action.payload.index
+      );
+      state.notes.splice(i, 1);
+      localStorage.setItem("notes", JSON.stringify(state));
+    },
   },
 });
 
-export const { addNote, closeAddNote, openAddNote } = noteSlice.actions;
+export const { addNote, closeAddNote, openAddNote, deleteNote } =
+  noteSlice.actions;
 export default noteSlice.reducer;

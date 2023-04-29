@@ -5,20 +5,22 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { openAddBookmark } from "./bookmarks.slice";
 import { Avatar } from "@mui/material";
 import "./bookmarks.plugin.scss";
+import { WidgetLayout } from "../../layouts/widget.layout";
 
 export const Bookmarks = () => {
   const bookmarks = useAppSelector((state) => state.bookmarks.bookmarks);
   const dispatch = useAppDispatch();
   return (
-    <section className="bookmarks">
-      <div className="bookmarks__header">
-        <h1 className="bookmarks__title drag-handle">Bookmarks</h1>
+    <WidgetLayout
+      title="Bookmarks"
+      actions={() => (
         <AiOutlinePlus
           className="bookmarks__add"
           onClick={() => dispatch(openAddBookmark())}
         />
-      </div>
-      <div className="bookmarks__container" style={{}}>
+      )}
+    >
+      <div className="bookmarks__container">
         {bookmarks.length !== 0 &&
           bookmarks.map((bookmark, i) => (
             <a
@@ -42,7 +44,7 @@ export const Bookmarks = () => {
             </a>
           ))}
       </div>
-    </section>
+    </WidgetLayout>
   );
 };
 

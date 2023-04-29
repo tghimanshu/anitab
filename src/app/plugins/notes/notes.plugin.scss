@@ -70,6 +70,15 @@
     font-size: 0.9rem;
     // text-decoration: line-through;
   }
+
+  &__actions {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &__header:hover &__actions {
+    opacity: 1;
+  }
 }
 
 /* Add notes */

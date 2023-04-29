@@ -14,7 +14,7 @@ export const AddNote = () => {
       index: notes.length === 0 ? 1 : notes[notes.length - 1].index + 1,
       title,
       note,
-      createdDate: new Date(),
+      createdDate: new Date(Date.now()).toDateString(),
       archived: false,
     };
     dispatch(addNote(newNote));

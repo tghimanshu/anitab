@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  AiFillCheckCircle,
-  AiOutlineCloseCircle,
-  AiOutlinePlus,
-} from "react-icons/ai";
+import { AiOutlineCloseCircle, AiOutlinePlus } from "react-icons/ai";
 import {
   Note,
   addNote,

@@ -10,17 +10,22 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import { BookmarksContainer } from "./plugins/bookmarks/bookmarks.plugin";
+import { AddBookmark } from "./plugins/bookmarks/add-bookmark.plugin";
 
 const ReactGridLayout = WidthProvider(RGL);
 
 export const App = () => {
   const isAddTodo = useAppSelector((state) => state.todos.isAdd);
   const isAddNote = useAppSelector((state) => state.notes.isAdd);
+  const isAddBookmark = useAppSelector((state) => state.bookmarks.isAdd);
+
   const layout = JSON.parse(
     localStorage.getItem("layout") ||
       JSON.stringify([
         { i: "todos", x: 0, y: 0, w: 3, h: 3, minW: 3, minH: 3 },
         { i: "notes", x: 3, y: 0, w: 3, h: 3, minW: 3, minH: 3 },
+        { i: "bookmarks", x: 6, y: 0, w: 3, h: 3, minW: 3, minH: 3 },
       ])
   );
   const [isNW, setIsNW] = useState(false);
@@ -71,9 +76,13 @@ export const App = () => {
         <div key="notes">
           <NotesContainer />
         </div>
+        <div key="bookmarks">
+          <BookmarksContainer />
+        </div>
       </ReactGridLayout>
       {isAddTodo && <AddTodo />}
       {isAddNote && <AddNote />}
+      <AddBookmark isAdd={isAddBookmark} />
       {isNW && (
         <iframe
           src="https://buildspace.so/home"

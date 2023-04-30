@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from "react";
-import {
-  AiFillCalendar,
-  AiFillCheckCircle,
-  AiOutlinePlus,
-} from "react-icons/ai";
+import { AiOutlinePlus } from "react-icons/ai";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import "./todos.plugin.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { openAddTodo, toggleComplete } from "./todos.slice";
+import { deleteTodo, openAddTodo, toggleComplete } from "./todos.slice";
 import { WidgetLayout } from "../../layouts/widget.layout";
 import {
+  Badge,
   IconButton,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
-  ListItemIcon,
-  Checkbox,
   ListSubheader,
+  Typography,
 } from "@mui/material";
-import { completeTodo } from "../../services/todos/todos.service";
 
 export const Todos = () => {
   const { todos } = useAppSelector((state) => state.todos);
@@ -99,14 +96,55 @@ export const Todos = () => {
                         color="warning"
                       />
                     </ListItemIcon> */}
-                      <ListItemText>{todo.title}</ListItemText>
+                      <ListItemText
+                        sx={{
+                          width: 0,
+                          overflow: "hidden",
+                          flexGrow: "1",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            overflow: "hidden",
+                            flexGrow: "1",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {todo.title}
+                        </Typography>
+                      </ListItemText>
+                      <div className="todo__actions">
+                        {/* <IconButton
+                          sx={todo.completed ? { color: "white" } : {}}
+                        >
+                          <EditIcon fontSize="small" />
+                        </IconButton> */}
+                        <IconButton
+                          sx={todo.completed ? { color: "white" } : {}}
+                          onClick={() => {
+                            dispatch(deleteTodo(todo));
+                          }}
+                        >
+                          <DeleteIcon fontSize="small" />
+                        </IconButton>
+                      </div>
                     </ListItemButton>
                   </ListItem>
                 );
               })}
           </List>
         ) : (
-          <p className="todos__empty">There are no missions yet</p>
+          todos.filter(
+            (todo) =>
+              !todo.completed &&
+              new Date(todo.createdDate).toDateString() !==
+                new Date(Date.now()).toDateString()
+          ).length === 0 && (
+            <p className="todos__empty">There are no missions yet</p>
+          )
         )}
         {todos.filter(
           (todo) =>
@@ -139,25 +177,23 @@ export const Todos = () => {
               )
               .map((todo, i) => {
                 return (
-                  new Date(todo.createdDate).toDateString() ===
-                    new Date(Date.now()).toDateString() && (
-                    <ListItem
-                      className={`todo` + (todo.completed ? " completed" : "")}
-                      key={i}
-                      // secondaryAction={
-                      //   <IconButton edge="end" aria-label="comments" size="small">
-                      //     <AiFillCalendar />
-                      //   </IconButton>
-                      // }
-                      disablePadding
-                      divider
+                  <ListItem
+                    className={`todo` + (todo.completed ? " completed" : "")}
+                    key={i}
+                    // secondaryAction={
+                    //   <IconButton edge="end" aria-label="comments" size="small">
+                    //     <AiFillCalendar />
+                    //   </IconButton>
+                    // }
+                    disablePadding
+                    divider
+                  >
+                    <ListItemButton
+                      role={undefined}
+                      onClick={() => dispatch(toggleComplete(todo.index))}
+                      dense
                     >
-                      <ListItemButton
-                        role={undefined}
-                        onClick={() => dispatch(toggleComplete(todo.index))}
-                        dense
-                      >
-                        {/* <ListItemIcon>
+                      {/* <ListItemIcon>
                       <Checkbox
                         edge="start"
                         checked={todo.completed}
@@ -167,10 +203,43 @@ export const Todos = () => {
                         color="warning"
                       />
                     </ListItemIcon> */}
-                        <ListItemText>{todo.title}</ListItemText>
-                      </ListItemButton>
-                    </ListItem>
-                  )
+                      <ListItemText
+                        sx={{
+                          width: 0,
+                          overflow: "hidden",
+                          flexGrow: "1",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            overflow: "hidden",
+                            flexGrow: "1",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {todo.title}
+                        </Typography>
+                      </ListItemText>
+                      <div className="todo__actions">
+                        {/* <IconButton
+                          sx={todo.completed ? { color: "white" } : {}}
+                        >
+                          <EditIcon fontSize="small" />
+                        </IconButton> */}
+                        <IconButton
+                          sx={todo.completed ? { color: "white" } : {}}
+                          onClick={() => {
+                            dispatch(deleteTodo(todo));
+                          }}
+                        >
+                          <DeleteIcon fontSize="small" />
+                        </IconButton>
+                      </div>
+                    </ListItemButton>
+                  </ListItem>
                 );
               })}
           </List>

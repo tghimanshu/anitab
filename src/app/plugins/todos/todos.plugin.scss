@@ -24,6 +24,15 @@
     color: white;
     text-decoration: line-through;
   }
+
+  &__actions {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover &__actions {
+    opacity: 1;
+  }
 }
 
 /* Add Todos */

@@ -2,10 +2,11 @@ import React from "react";
 import _ from "lodash";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { openAddBookmark } from "./bookmarks.slice";
-import { Avatar } from "@mui/material";
+import { deleteBookmark, openAddBookmark } from "./bookmarks.slice";
+import { Avatar, Badge, IconButton } from "@mui/material";
 import "./bookmarks.plugin.scss";
 import { WidgetLayout } from "../../layouts/widget.layout";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export const Bookmarks = () => {
   const bookmarks = useAppSelector((state) => state.bookmarks.bookmarks);
@@ -20,6 +21,9 @@ export const Bookmarks = () => {
         />
       )}
     >
+      {bookmarks.length === 0 && (
+        <p className="bookmarks__empty">There are no bookmarks yet</p>
+      )}
       <div className="bookmarks__container">
         {bookmarks.length !== 0 &&
           bookmarks.map((bookmark, i) => (
@@ -41,6 +45,31 @@ export const Bookmarks = () => {
                 }}
               />
               <p className="bookmark__title">{bookmark.title}</p>
+              <IconButton
+                color="error"
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch(deleteBookmark(bookmark));
+                }}
+                sx={{
+                  position: "absolute",
+                  top: "-15px",
+                  right: "-15px",
+                  background: "white",
+                  // opacity: 0.4,
+                  "&:hover": {
+                    background: "white",
+                    opacity: 1,
+                  },
+                }}
+                className="bookmark__delete"
+              >
+                <DeleteIcon
+                  sx={{
+                    fontSize: "0.8em",
+                  }}
+                />
+              </IconButton>
             </a>
           ))}
       </div>

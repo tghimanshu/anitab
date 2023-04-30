@@ -7,9 +7,10 @@ import MuiAccordionSummary, {
 } from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
+import Tooltip from "@mui/material/Tooltip";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { deleteNote, openAddNote } from "./notes.slice";
+import { deleteNote, openAddNote, openEditNote } from "./notes.slice";
 import "./notes.plugin.scss";
 import { WidgetLayout } from "../../layouts/widget.layout";
 import EditIcon from "@mui/icons-material/Edit";
@@ -91,19 +92,25 @@ export const Notes = () => {
                   aria-controls="panel3d-content"
                   className="note__header"
                 >
-                  <Typography
-                    sx={{
-                      textOverflow: "ellipsis",
-                      overflow: "hidden",
-                      flexGrow: "1",
-                    }}
-                  >
-                    {note.title}
-                  </Typography>
+                  <Tooltip title={note.title}>
+                    <Typography
+                      sx={{
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        flexGrow: "1",
+                        whiteSpace: "nowrap",
+                        width: 0,
+                      }}
+                    >
+                      {note.title}
+                    </Typography>
+                  </Tooltip>
                   <div className="note__actions">
-                    <IconButton>
+                    {/* <IconButton
+                      onClick={() => dispatch(openEditNote(note.index))}
+                    >
                       <EditIcon fontSize="small" />
-                    </IconButton>
+                    </IconButton> */}
                     <IconButton
                       onClick={() => {
                         dispatch(deleteNote(note));

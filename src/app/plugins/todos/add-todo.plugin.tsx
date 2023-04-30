@@ -1,69 +1,82 @@
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { Todo, addTodo, closeAddTodo } from "./todos.slice";
-import { AiOutlineCloseCircle } from "react-icons/ai";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  TextField,
+} from "@mui/material";
 
-export const AddTodo = () => {
+export const AddTodo = (props: { isAdd: boolean }) => {
   const dispatch = useAppDispatch();
   const todos = useAppSelector((state) => state.todos.todos);
 
   const [title, setTitle] = useState("");
-  const [priority, setPriority] = useState("Gennin");
+  // const [priority, setPriority] = useState("Gennin");
 
-  const onAddTodo = () => {
+  const handleAddTodo = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
     const todo: Todo = {
       index: todos.length === 0 ? 1 : todos[todos.length - 1].index + 1,
       title,
-      priority,
+      priority: "Genin",
       completed: false,
       createdDate: new Date(),
     };
     dispatch(addTodo(todo));
+    setTitle("");
     dispatch(closeAddTodo());
   };
 
   return (
-    <div className="add-todos">
-      <div className="add-todos__container">
-        <div className="add-todos__header">
-          <h1 className="add-todos__title">Add Mission</h1>
-          <AiOutlineCloseCircle
-            className="add-todos__close"
-            onClick={() => dispatch(closeAddTodo())}
-          />
-        </div>
-        <div className="add-todos__form">
-          <input
-            type="text"
-            className="add-todos__input-title"
-            placeholder="Enter Mission Title Here..."
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <select
-            className="add-todos__input-priority"
-            value={priority}
-            onChange={(e) => setPriority(e.target.value)}
+    <Dialog
+      open={props.isAdd}
+      onClose={() => {
+        setTitle("");
+        dispatch(closeAddTodo());
+      }}
+    >
+      <DialogTitle>Add Todo</DialogTitle>
+      <DialogContent>
+        <form onSubmit={handleAddTodo}>
+          <FormControl fullWidth>
+            <TextField
+              autoFocus
+              label="Todo"
+              variant="standard"
+              value={title}
+              sx={{
+                marginBottom: "10px",
+              }}
+              required
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </FormControl>
+          <DialogActions
+            sx={{
+              justifyContent: "center",
+              marginTop: "10px",
+            }}
           >
-            <option value="Gennin">Gennin</option>
-            <option value="Chunnin">Chunnin</option>
-            <option value="Jonin">Jonin</option>
-            <option value="Anbu">Anbu</option>
-            <option value="Hokage">Hokage</option>
-          </select>
-          <div className="add-todos__actions">
-            <button className="add-todos__submit" onClick={onAddTodo}>
-              Add
-            </button>
-            <button
-              className="add-todos__cancel"
-              onClick={() => dispatch(closeAddTodo())}
+            <Button variant="contained" type="submit">
+              Add Todo
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={() => {
+                setTitle("");
+                dispatch(closeAddTodo());
+              }}
             >
               Cancel
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+            </Button>
+          </DialogActions>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 };

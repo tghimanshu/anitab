@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface Bookmark {
+  index: number;
   title: string;
   url: URL;
 }
@@ -11,12 +12,7 @@ const initialState: {
 } = JSON.parse(
   localStorage.getItem("bookmarks") ||
     JSON.stringify({
-      bookmarks: [
-        {
-          title: "stackoverflow",
-          url: "https://stackoverflow.com/questions/71829854/cognito-error-invalid-userpoolid-format",
-        },
-      ],
+      bookmarks: [],
       isAdd: false,
     })
 );
@@ -37,9 +33,20 @@ const bookmarkSlice = createSlice({
       state.bookmarks.push(action.payload);
       localStorage.setItem("bookmarks", JSON.stringify(state));
     },
+    deleteBookmark(state, action: PayloadAction<Bookmark>) {
+      let i = state.bookmarks.findIndex(
+        (bookmark) => bookmark.index === action.payload.index
+      );
+      state.bookmarks.splice(i, 1);
+      localStorage.setItem("bookmarks", JSON.stringify(state));
+    },
   },
 });
 
-export const { openAddBookmark, closeAddBookmark, addBookmark } =
-  bookmarkSlice.actions;
+export const {
+  openAddBookmark,
+  closeAddBookmark,
+  addBookmark,
+  deleteBookmark,
+} = bookmarkSlice.actions;
 export default bookmarkSlice.reducer;

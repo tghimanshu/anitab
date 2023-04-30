@@ -80,8 +80,8 @@ export const App = () => {
           <BookmarksContainer />
         </div>
       </ReactGridLayout>
-      {isAddTodo && <AddTodo />}
-      {isAddNote && <AddNote />}
+      <AddTodo isAdd={isAddTodo} />
+      <AddNote isAdd={isAddNote} />
       <AddBookmark isAdd={isAddBookmark} />
       {isNW && (
         <iframe

@@ -1,76 +1,58 @@
-import React, { useState } from "react";
+import React from "react";
 import RGL, { Layout, WidthProvider } from "react-grid-layout";
-import { TodosContainer } from "./plugins/todos/todos.plugin";
 import { AddTodo } from "./plugins/todos/add-todo.plugin";
-import { useAppSelector } from "./hooks";
-import { NotesContainer } from "./plugins/notes/notes.plugin";
+import { useAppDispatch, useAppSelector } from "./hooks";
 import { AddNote } from "./plugins/notes/add-note.plugin";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import { BookmarksContainer } from "./plugins/bookmarks/bookmarks.plugin";
 import { AddBookmark } from "./plugins/bookmarks/add-bookmark.plugin";
+import { Header } from "./header/header";
+import {
+  allWidgets,
+  updateLayout,
+} from "./modals/settings/pages/widget/widget.slice";
+import { BrowserRouter } from "react-router-dom";
 
 const ReactGridLayout = WidthProvider(RGL);
 
 export const App = () => {
+  const dispatch = useAppDispatch();
   const isAddTodo = useAppSelector((state) => state.todos.isAdd);
   const isAddNote = useAppSelector((state) => state.notes.isAdd);
   const isAddBookmark = useAppSelector((state) => state.bookmarks.isAdd);
 
-  const layout = JSON.parse(
-    localStorage.getItem("layout") ||
-      JSON.stringify([
-        { i: "todos", x: 0, y: 0, w: 3, h: 3, minW: 3, minH: 3 },
-        { i: "notes", x: 3, y: 0, w: 3, h: 3, minW: 3, minH: 3 },
-        { i: "bookmarks", x: 6, y: 0, w: 3, h: 3, minW: 3, minH: 3 },
-      ])
-  );
-  const [isNW, setIsNW] = useState(false);
-
-  const getBackgroundImage = () => {
-    let group = localStorage.getItem("group");
-    if (group) {
-      switch (group) {
-        case "gaudmire":
-          return "url(./assets/gaudmire.webp)";
-        case "spectreseek":
-          return "url(./assets/spectreseek.webp)";
-        case "erevald":
-          return "url(./assets/erevald.webp)";
-        case "alterok":
-          return "url(./assets/alterok.webp)";
-        default:
-          return "url(./assets/background.jpg)";
-      }
-    } else {
-      return "url(./assets/background.jpg)";
-    }
-  };
+  const widgets = useAppSelector((state) => state.settings.widgets);
+  const profile = useAppSelector((state) => state.settings.profile);
 
   function onChangeLayout(newLayout: Layout[]) {
-    localStorage.setItem("layout", JSON.stringify(newLayout));
+    dispatch(updateLayout(newLayout.map((v) => ({ ...v, id: v.i }))));
   }
   return (
-    <div
-      className="main-screen"
-      style={{
-        background: `${getBackgroundImage()} no-repeat center center/cover`,
-      }}
-    >
-      <ReactGridLayout
-        className="layout"
-        layout={layout}
-        cols={12}
-        rowHeight={60}
-        // width={1280}
-        isDroppable
-        draggableHandle=".drag-handle"
-        onLayoutChange={onChangeLayout}
+    <BrowserRouter>
+      <div
+        className="main-screen"
+        style={{
+          background: `url(${profile.background.url}) no-repeat center center/cover`,
+        }}
       >
-        <div key="todos">
+        <Header />
+        <div className="main-content">
+          <ReactGridLayout
+            className="layout"
+            layout={widgets.map((widget) => ({
+              ...widget,
+              i: widget.id,
+            }))}
+            cols={12}
+            rowHeight={60}
+            isDroppable
+            draggableHandle=".drag-handle"
+            onLayoutChange={onChangeLayout}
+          >
+            {/* <div key="todos">
           <TodosContainer />
         </div>
         <div key="notes">
@@ -78,17 +60,16 @@ export const App = () => {
         </div>
         <div key="bookmarks">
           <BookmarksContainer />
+        </div> */}
+            {widgets.map((widget) => {
+              return widget.visible && allWidgets[widget.id].component();
+            })}
+          </ReactGridLayout>
         </div>
-      </ReactGridLayout>
-      <AddTodo isAdd={isAddTodo} />
-      <AddNote isAdd={isAddNote} />
-      <AddBookmark isAdd={isAddBookmark} />
-      {isNW && (
-        <iframe
-          src="https://buildspace.so/home"
-          className="nights-weekends__content"
-        ></iframe>
-      )}
-    </div>
+        <AddTodo isAdd={isAddTodo} />
+        <AddNote isAdd={isAddNote} />
+        <AddBookmark isAdd={isAddBookmark} />
+      </div>
+    </BrowserRouter>
   );
 };

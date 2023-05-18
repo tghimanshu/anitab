@@ -39,7 +39,9 @@ a {
 .main-screen {
   width: 100vw;
   height: 100vh;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  /* overflow-y: auto; */
 }
 
 .profile {
@@ -128,4 +130,9 @@ a {
   -o-user-select: none;
   user-select: none;
   cursor: grab;
+}
+
+.main-content {
+  overflow-y: auto;
+  flex-grow: 1;
 }

@@ -15,7 +15,6 @@ export const AddNote = (props: { isAdd: boolean }) => {
   const dispatch = useAppDispatch();
   const notes = useAppSelector((state) => state.notes.notes);
   const editingId = useAppSelector((state) => state.notes.isEditing);
-  console.log(editingId);
 
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");

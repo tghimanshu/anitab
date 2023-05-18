@@ -14,7 +14,7 @@ import {
   allWidgets,
   updateLayout,
 } from "./modals/settings/pages/widget/widget.slice";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 
 const ReactGridLayout = WidthProvider(RGL);
 
@@ -31,7 +31,7 @@ export const App = () => {
     dispatch(updateLayout(newLayout.map((v) => ({ ...v, id: v.i }))));
   }
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div
         className="main-screen"
         style={{
@@ -70,6 +70,6 @@ export const App = () => {
         <AddNote isAdd={isAddNote} />
         <AddBookmark isAdd={isAddBookmark} />
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 };

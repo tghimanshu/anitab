@@ -9,14 +9,7 @@ import {
   Divider,
 } from "@mui/material";
 import React from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
+import { Routes, Route, Link, Navigate, useNavigate } from "react-router-dom";
 import { GeneralSettings } from "./pages/widget/widget.settings";
 import { PomodoroSettings } from "./pages/pomodoro/pomodoro.settings";
 import { useAppDispatch, useAppSelector } from "../../hooks";

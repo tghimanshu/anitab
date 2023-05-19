@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsc && vite build --watch",
     "lint": "eslint --max-warnings=0 src",
-    "eslint:github-action": "node ./node_modules/eslint/bin/eslint . --ignore-path .gitignore --max-warnings 0",
+    "eslint:github-action": "eslint --output-file eslint_report.json --format json --max-warnings=0 src",
     "build": "tsc && vite build"
   },
   "devDependencies": {

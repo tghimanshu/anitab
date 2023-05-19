@@ -1,3 +1,4 @@
+# https://www.youtube.com/watch?v=xUJoeOC1t0M
 name: Lint
 on: [push]
 jobs:
@@ -18,4 +19,11 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: Build project
-        run: npm run lint
+        run: npm run eslint:github-action
+
+      - name: Annotate Code Linting Results
+        uses: ataylorme/eslint-annotate-action@1.0.4
+        if: always()
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          report-json: "eslint_report.json"

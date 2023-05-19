@@ -1,4 +1,4 @@
-name: Deploy
+name: Release Anitab
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Build the App
     runs-on: ubuntu-latest
 
     steps:

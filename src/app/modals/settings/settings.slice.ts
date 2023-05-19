@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { useNavigate } from "react-router";
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface Setting {
   show: boolean;

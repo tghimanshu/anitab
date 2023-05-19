@@ -1,10 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
-import _ from "lodash";
 import { WidgetLayout } from "../../layouts/widget.layout";
 import { Pause, PlayArrow, Settings } from "@mui/icons-material";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { Button, ButtonGroup, IconButton } from "@mui/material";
+import { Button, ButtonGroup } from "@mui/material";
 import moment from "moment";
 import { changeActiveTimer } from "./pomodoro.slice";
 import { openSettings } from "../../modals/settings/settings.slice";

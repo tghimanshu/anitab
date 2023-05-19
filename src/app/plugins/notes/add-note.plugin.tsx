@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { Note, addNote, closeAddNote, updateNote } from "./notes.slice";
 import {

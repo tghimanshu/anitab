@@ -28,7 +28,7 @@ export const ProfileSettings = () => {
     setUsername(widgets.username);
     setGreeting(widgets.greeting);
     setBackground(widgets.background);
-  }, []);
+  }, [widgets]);
 
   const handleChange = (e: any) => {
     setUsername(e.target.value);

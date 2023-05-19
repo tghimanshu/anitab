@@ -10,10 +10,9 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { deleteNote, openAddNote, openEditNote } from "./notes.slice";
+import { deleteNote, openAddNote } from "./notes.slice";
 import "./notes.plugin.scss";
 import { WidgetLayout } from "../../layouts/widget.layout";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton } from "@mui/material";
 

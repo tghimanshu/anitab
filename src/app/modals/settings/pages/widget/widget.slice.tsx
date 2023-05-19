@@ -1,6 +1,6 @@
-import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import React from "react";
-import { Todos, TodosContainer } from "../../../../plugins/todos/todos.plugin";
+import { TodosContainer } from "../../../../plugins/todos/todos.plugin";
 import { NotesContainer } from "../../../../plugins/notes/notes.plugin";
 import { BookmarksContainer } from "../../../../plugins/bookmarks/bookmarks.plugin";
 import { PomodoroContainer } from "../../../../plugins/pomodoro/pomodor.plugin";

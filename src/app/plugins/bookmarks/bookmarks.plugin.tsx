@@ -1,9 +1,8 @@
 import React from "react";
-import _ from "lodash";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { deleteBookmark, openAddBookmark } from "./bookmarks.slice";
-import { Avatar, Badge, IconButton } from "@mui/material";
+import { Avatar, IconButton } from "@mui/material";
 import "./bookmarks.plugin.scss";
 import { WidgetLayout } from "../../layouts/widget.layout";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -32,6 +31,7 @@ export const Bookmarks = () => {
               target="_blank"
               className="bookmark"
               key={i}
+              rel="noreferrer"
             >
               <Avatar
                 className="bookmark__icon"

@@ -30,7 +30,7 @@ export const PomodoroSettings = () => {
         "mm:ss"
       )
     );
-  }, []);
+  }, [pomodoro.breakTime, pomodoro.workTime]);
 
   return (
     <div>

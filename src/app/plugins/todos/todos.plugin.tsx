@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import "./todos.plugin.scss";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { deleteTodo, openAddTodo, toggleComplete } from "./todos.slice";
 import { WidgetLayout } from "../../layouts/widget.layout";
 import {
-  Badge,
   IconButton,
   List,
   ListItem,
@@ -16,6 +13,7 @@ import {
   ListSubheader,
   Typography,
 } from "@mui/material";
+import "./todos.plugin.scss";
 
 export const Todos = () => {
   const { todos } = useAppSelector((state) => state.todos);

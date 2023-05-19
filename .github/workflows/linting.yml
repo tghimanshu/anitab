@@ -21,7 +21,7 @@ jobs:
       - name: Build project
         run: npm run eslint:github-action
 
-      - name: Annotate Code Linting Results
+      - name: Annotated Code Linting Results
         uses: ataylorme/eslint-annotate-action@1.0.4
         if: always()
         with:

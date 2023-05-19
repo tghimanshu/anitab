@@ -1,76 +1,49 @@
 /* Todos */
 .todos {
-  background: white;
-  padding: 0 15px;
-  border-radius: 5px;
-  margin: 15px;
-  width: 40vw;
-
   &__container {
-    padding-bottom: 10px;
-    overflow-y: auto;
-    max-height: 20rem;
+    padding: 5px 15px;
   }
-
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  &__title {
-    text-align: center;
-    padding: 15px;
-  }
-
-  &__add {
-    font-size: 1.5rem;
-  }
-
   &__empty {
-    margin-top: 10px;
-    margin-bottom: 15px;
     text-align: center;
+    margin-top: 10px;
+    font-style: italic;
   }
 }
 
 .todo {
-  display: flex;
-  padding: 10px;
-  align-items: center;
-  border: 1px solid black;
-  border-radius: 10px;
-  margin-bottom: 5px;
+  // display: grid;
+  // grid-template-columns: auto 1fr;
+  // padding: 10px;
+  // align-items: center;
+  // border: 0.5px solid black;
+  // border-radius: 10px;
+  // margin-bottom: 3px;
 
   &.completed {
     background-color: green;
     color: white;
+    text-decoration: line-through;
   }
 
-  &__section {
-    margin-bottom: 5px;
+  &__actions {
+    opacity: 0;
+    transition: opacity 0.3s ease;
   }
 
-  &__btn {
-    border: none;
-    background-color: none;
-    font-size: 1.5rem;
-    margin-right: 15px;
-  }
-  &__title {
-    font-size: 1rem;
-    // text-decoration: line-through;
+  &:hover &__actions {
+    opacity: 1;
   }
 }
 
 /* Add Todos */
 
 .add-todos {
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
+  position: fixed;
   top: 0;
   left: 0;
+  pointer-events: all;
+  width: 100vw;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.75);
   display: flex;
   justify-content: center;

@@ -1,0 +1,47 @@
+/* bookmarks */
+.bookmarks {
+  &__container {
+    display: inline-flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 25px 15px;
+    overflow-y: auto;
+  }
+  &__empty {
+    text-align: center;
+    font-style: italic;
+    padding: 15px 5px;
+  }
+}
+
+.bookmark {
+  width: 100px;
+  height: 100px;
+  padding: 5px 10px;
+  box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.2);
+  position: relative;
+
+  &__icon {
+    padding: 0.5rem;
+    box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.2);
+    margin: 10px auto;
+  }
+
+  &__title {
+    font-size: 1rem;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  &__delete {
+    opacity: 0;
+    transform: opacity 0.5s ease;
+  }
+  &:hover > &__delete {
+    opacity: 1;
+  }
+}
+
+/* Add bookmarks */

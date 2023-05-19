@@ -1,6 +1,6 @@
 # https://www.youtube.com/watch?v=xUJoeOC1t0M
 name: Lint
-on: [push]
+on: pull_request
 jobs:
   build:
     name: Lint App

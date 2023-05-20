@@ -4,7 +4,7 @@ export interface Todo {
   index: number;
   title: string;
   completed: boolean;
-  createdDate: Date;
+  createdDate: string;
   priority: string;
 }
 

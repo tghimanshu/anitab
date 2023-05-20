@@ -25,7 +25,7 @@ export const AddTodo = (props: { isAdd: boolean }) => {
       title,
       priority: "Genin",
       completed: false,
-      createdDate: new Date(),
+      createdDate: new Date().toISOString(),
     };
     dispatch(addTodo(todo));
     setTitle("");

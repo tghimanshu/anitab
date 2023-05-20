@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { Todo, addTodo, closeAddTodo } from "./todos.slice";
+import { Todo, addTodo, closeAddTodo, updateTodo } from "./todos.slice";
 import {
   Button,
   Dialog,
@@ -14,9 +14,17 @@ import {
 export const AddTodo = (props: { isAdd: boolean }) => {
   const dispatch = useAppDispatch();
   const todos = useAppSelector((state) => state.todos.todos);
+  const editingId = useAppSelector((state) => state.todos.isEditing);
 
   const [title, setTitle] = useState("");
   // const [priority, setPriority] = useState("Gennin");
+
+  useEffect(() => {
+    if (editingId !== undefined) {
+      const idx = todos.findIndex((v) => v.index === editingId);
+      setTitle(todos[idx].title);
+    }
+  }, [editingId, todos]);
 
   const handleAddTodo = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -25,9 +33,24 @@ export const AddTodo = (props: { isAdd: boolean }) => {
       title,
       priority: "Genin",
       completed: false,
-      createdDate: new Date(),
+      createdDate: new Date().toISOString(),
     };
     dispatch(addTodo(todo));
+    setTitle("");
+    dispatch(closeAddTodo());
+  };
+
+  const handleEditTodo = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    if (editingId !== undefined) {
+      const idx = todos.findIndex((v) => v.index === editingId);
+      dispatch(
+        updateTodo({
+          ...todos[idx],
+          title: title,
+        })
+      );
+    }
     setTitle("");
     dispatch(closeAddTodo());
   };
@@ -42,7 +65,9 @@ export const AddTodo = (props: { isAdd: boolean }) => {
     >
       <DialogTitle>Add Todo</DialogTitle>
       <DialogContent>
-        <form onSubmit={handleAddTodo}>
+        <form
+          onSubmit={editingId === undefined ? handleAddTodo : handleEditTodo}
+        >
           <FormControl fullWidth>
             <TextField
               autoFocus
@@ -63,7 +88,8 @@ export const AddTodo = (props: { isAdd: boolean }) => {
             }}
           >
             <Button variant="contained" type="submit">
-              Add Todo
+              {editingId === undefined ? "Add " : "Edit "}
+              Todo
             </Button>
             <Button
               variant="outlined"

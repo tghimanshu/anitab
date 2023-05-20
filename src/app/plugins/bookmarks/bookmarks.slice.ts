@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 export interface Bookmark {
   index: number;
   title: string;
-  url: URL;
+  url: string;
 }
 
 const initialState: {

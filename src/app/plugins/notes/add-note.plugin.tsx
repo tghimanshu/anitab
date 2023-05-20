@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { Note, addNote, closeAddNote, updateNote } from "./notes.slice";
 import {
@@ -19,12 +19,13 @@ export const AddNote = (props: { isAdd: boolean }) => {
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
 
-  // useEffect(() => {
-  //   if (editingId !== undefined) {
-  //     setTitle(notes[editingId].title);
-  //     setNote(notes[editingId].note);
-  //   }
-  // }, [editingId]);
+  useEffect(() => {
+    if (editingId !== undefined) {
+      let idx = notes.findIndex((v) => v.index === editingId);
+      setTitle(notes[idx].title);
+      setNote(notes[idx].note);
+    }
+  }, [editingId, notes]);
 
   const handleAddNote = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -44,11 +45,12 @@ export const AddNote = (props: { isAdd: boolean }) => {
   const handleEditNote = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     if (editingId !== undefined) {
+      let idx = notes.findIndex((v) => v.index === editingId);
       dispatch(
         updateNote({
-          index: notes[editingId].index,
-          title: notes[editingId].title,
-          note: notes[editingId].note,
+          ...notes[idx],
+          title: title,
+          note: note,
         })
       );
     }

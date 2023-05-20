@@ -25,7 +25,7 @@ export const AddBookmark = (props: { isAdd: boolean }) => {
       index:
         bookmarks.length === 0 ? 1 : bookmarks[bookmarks.length - 1].index + 1,
       title,
-      url: new URL(url),
+      url: url,
     };
     dispatch(addBookmark(bookmark));
     setTitle("");

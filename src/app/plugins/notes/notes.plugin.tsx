@@ -10,11 +10,12 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { deleteNote, openAddNote } from "./notes.slice";
-import "./notes.plugin.scss";
+import { deleteNote, openAddNote, openEditNote } from "./notes.slice";
 import { WidgetLayout } from "../../layouts/widget.layout";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
+import "./notes.plugin.scss";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -105,11 +106,11 @@ export const Notes = () => {
                     </Typography>
                   </Tooltip>
                   <div className="note__actions">
-                    {/* <IconButton
+                    <IconButton
                       onClick={() => dispatch(openEditNote(note.index))}
                     >
                       <EditIcon fontSize="small" />
-                    </IconButton> */}
+                    </IconButton>
                     <IconButton
                       onClick={() => {
                         dispatch(deleteNote(note));

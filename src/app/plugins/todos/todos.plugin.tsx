@@ -3,7 +3,12 @@ import { AiOutlinePlus } from "react-icons/ai";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { deleteTodo, openAddTodo, toggleComplete } from "./todos.slice";
+import {
+  deleteTodo,
+  openAddTodo,
+  openEditTodo,
+  toggleComplete,
+} from "./todos.slice";
 import { WidgetLayout } from "../../layouts/widget.layout";
 import {
   IconButton,
@@ -108,6 +113,11 @@ export const Todos = () => {
                       <div className="todo__actions">
                         <IconButton
                           sx={todo.completed ? { color: "white" } : {}}
+                          onClick={(e) => {
+                            e.stopPropagation();
+
+                            dispatch(openEditTodo(todo.index));
+                          }}
                         >
                           <EditIcon fontSize="small" />
                         </IconButton>

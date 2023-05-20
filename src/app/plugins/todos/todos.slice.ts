@@ -45,6 +45,12 @@ const todoSlice = createSlice({
       state.todos[index].completed = !state.todos[index].completed;
       localStorage.setItem("todos", JSON.stringify(state));
     },
+    updateTodo(state, action: PayloadAction<Todo>) {
+      let idx = state.todos.findIndex((v) => v.index === action.payload.index);
+      state.todos[idx] = {
+        ...action.payload,
+      };
+    },
     deleteTodo(state, action: PayloadAction<Todo>) {
       let i = state.todos.findIndex(
         (todo) => todo.index === action.payload.index
@@ -58,8 +64,10 @@ const todoSlice = createSlice({
 export const {
   addTodo,
   closeAddTodo,
+  updateTodo,
   openAddTodo,
   toggleComplete,
   deleteTodo,
+  openEditTodo,
 } = todoSlice.actions;
 export default todoSlice.reducer;

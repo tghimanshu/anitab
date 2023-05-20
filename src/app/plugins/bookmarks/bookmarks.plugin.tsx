@@ -49,6 +49,8 @@ export const Bookmarks = () => {
                 color="error"
                 onClick={(e) => {
                   e.preventDefault();
+                  e.stopPropagation();
+
                   dispatch(deleteBookmark(bookmark));
                 }}
                 sx={{

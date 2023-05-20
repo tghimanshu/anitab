@@ -25,9 +25,7 @@ const noteSlice = createSlice({
     },
     openEditNote(state, action: PayloadAction<number>) {
       state.isAdd = true;
-      state.isEditing = state.notes.findIndex(
-        (note) => note.index === action.payload
-      );
+      state.isEditing = action.payload;
       localStorage.setItem("notes", JSON.stringify(state));
     },
     closeAddNote(state) {
@@ -39,15 +37,9 @@ const noteSlice = createSlice({
       state.notes.push(action.payload);
       localStorage.setItem("notes", JSON.stringify(state));
     },
-    updateNote(
-      state,
-      action: PayloadAction<{ index: number; title: string; note: string }>
-    ) {
-      let i = state.notes.findIndex(
-        (note) => note.index === action.payload.index
-      );
-      state.notes[i] = {
-        ...state.notes[i],
+    updateNote(state, action: PayloadAction<Note>) {
+      let idx = state.notes.findIndex((v) => v.index === action.payload.index);
+      state.notes[idx] = {
         ...action.payload,
       };
       localStorage.setItem("notes", JSON.stringify(state));

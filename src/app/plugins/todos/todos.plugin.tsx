@@ -1,8 +1,14 @@
 import React from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { deleteTodo, openAddTodo, toggleComplete } from "./todos.slice";
+import {
+  deleteTodo,
+  openAddTodo,
+  openEditTodo,
+  toggleComplete,
+} from "./todos.slice";
 import { WidgetLayout } from "../../layouts/widget.layout";
 import {
   IconButton,
@@ -84,16 +90,6 @@ export const Todos = () => {
                       onClick={() => dispatch(toggleComplete(todo.index))}
                       dense
                     >
-                      {/* <ListItemIcon>
-                      <Checkbox
-                        edge="start"
-                        checked={todo.completed}
-                        tabIndex={-1}
-                        disableRipple
-                        size="small"
-                        color="warning"
-                      />
-                    </ListItemIcon> */}
                       <ListItemText
                         sx={{
                           width: 0,
@@ -115,14 +111,21 @@ export const Todos = () => {
                         </Typography>
                       </ListItemText>
                       <div className="todo__actions">
-                        {/* <IconButton
-                          sx={todo.completed ? { color: "white" } : {}}
-                        >
-                          <EditIcon fontSize="small" />
-                        </IconButton> */}
                         <IconButton
                           sx={todo.completed ? { color: "white" } : {}}
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
+
+                            dispatch(openEditTodo(todo.index));
+                          }}
+                        >
+                          <EditIcon fontSize="small" />
+                        </IconButton>
+                        <IconButton
+                          sx={todo.completed ? { color: "white" } : {}}
+                          onClick={(e) => {
+                            e.stopPropagation();
+
                             dispatch(deleteTodo(todo));
                           }}
                         >
@@ -222,14 +225,16 @@ export const Todos = () => {
                         </Typography>
                       </ListItemText>
                       <div className="todo__actions">
-                        {/* <IconButton
+                        <IconButton
                           sx={todo.completed ? { color: "white" } : {}}
                         >
                           <EditIcon fontSize="small" />
-                        </IconButton> */}
+                        </IconButton>
                         <IconButton
                           sx={todo.completed ? { color: "white" } : {}}
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
+
                             dispatch(deleteTodo(todo));
                           }}
                         >

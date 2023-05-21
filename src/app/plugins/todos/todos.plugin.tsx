@@ -2,6 +2,7 @@ import React from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import CalendarIcon from "@mui/icons-material/CalendarMonth";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
   deleteTodo,
@@ -17,6 +18,7 @@ import {
   ListItemButton,
   ListItemText,
   ListSubheader,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import "./todos.plugin.scss";
@@ -106,26 +108,46 @@ export const Todos = () => {
                         </Typography>
                       </ListItemText>
                       <div className="todo__actions">
-                        <IconButton
-                          sx={todo.completed ? { color: "white" } : {}}
-                          onClick={(e) => {
-                            e.stopPropagation();
-
-                            dispatch(openEditTodo(todo.index));
-                          }}
+                        <Tooltip
+                          title="Add to Calendar"
+                          placement="top"
+                          arrow={true}
                         >
-                          <EditIcon fontSize="small" />
-                        </IconButton>
-                        <IconButton
-                          sx={todo.completed ? { color: "white" } : {}}
-                          onClick={(e) => {
-                            e.stopPropagation();
+                          <IconButton
+                            sx={todo.completed ? { color: "white" } : {}}
+                            href={`https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20230521T104500Z%2F20230521T111500Z&text=${encodeURIComponent(
+                              todo.title
+                            )}`}
+                            onClick={(e) => e.stopPropagation()}
+                            target="_blank"
+                          >
+                            <CalendarIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Edit" placement="top" arrow={true}>
+                          <IconButton
+                            sx={todo.completed ? { color: "white" } : {}}
+                            onClick={(e) => {
+                              e.stopPropagation();
 
-                            dispatch(deleteTodo(todo));
-                          }}
-                        >
-                          <DeleteIcon fontSize="small" />
-                        </IconButton>
+                              dispatch(openEditTodo(todo.index));
+                            }}
+                          >
+                            <EditIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete" placement="top" arrow={true}>
+                          <IconButton
+                            sx={todo.completed ? { color: "white" } : {}}
+                            onClick={(e) => {
+                              e.stopPropagation();
+
+                              dispatch(deleteTodo(todo));
+                            }}
+                          >
+                            <DeleteIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
                       </div>
                     </ListItemButton>
                   </ListItem>
@@ -220,21 +242,46 @@ export const Todos = () => {
                         </Typography>
                       </ListItemText>
                       <div className="todo__actions">
-                        <IconButton
-                          sx={todo.completed ? { color: "white" } : {}}
+                        <Tooltip
+                          title="Add to Calendar"
+                          placement="top"
+                          arrow={true}
                         >
-                          <EditIcon fontSize="small" />
-                        </IconButton>
-                        <IconButton
-                          sx={todo.completed ? { color: "white" } : {}}
-                          onClick={(e) => {
-                            e.stopPropagation();
+                          <IconButton
+                            sx={todo.completed ? { color: "white" } : {}}
+                            href={`https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20230521T104500Z%2F20230521T111500Z&text=${encodeURIComponent(
+                              todo.title
+                            )}`}
+                            onClick={(e) => e.stopPropagation()}
+                            target="_blank"
+                          >
+                            <CalendarIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Edit" placement="top" arrow={true}>
+                          <IconButton
+                            sx={todo.completed ? { color: "white" } : {}}
+                            onClick={(e) => {
+                              e.stopPropagation();
 
-                            dispatch(deleteTodo(todo));
-                          }}
-                        >
-                          <DeleteIcon fontSize="small" />
-                        </IconButton>
+                              dispatch(openEditTodo(todo.index));
+                            }}
+                          >
+                            <EditIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete" placement="top" arrow={true}>
+                          <IconButton
+                            sx={todo.completed ? { color: "white" } : {}}
+                            onClick={(e) => {
+                              e.stopPropagation();
+
+                              dispatch(deleteTodo(todo));
+                            }}
+                          >
+                            <DeleteIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
                       </div>
                     </ListItemButton>
                   </ListItem>

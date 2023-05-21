@@ -13,11 +13,6 @@ export const WidgetLayout = ({ children, actions, title }: Props) => {
   );
 };
 
-// type Props = {
-//   children: string | JSX.Element | JSX.Element[] | null;
-//   actions: any;
-// };
-
 type Props = {
   children: any;
   actions: any;

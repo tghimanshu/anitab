@@ -20,6 +20,7 @@ export const ProfileSettings = () => {
     type: "default",
     url: "",
   });
+  const [theme, setTheme] = useState("light");
   const widgets = useAppSelector((state) => state.settings.profile);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ export const ProfileSettings = () => {
     setUsername(widgets.username);
     setGreeting(widgets.greeting);
     setBackground(widgets.background);
+    setTheme(widgets.theme ? widgets.theme : "light");
   }, [widgets]);
 
   const handleChange = (e: any) => {
@@ -88,6 +90,20 @@ export const ProfileSettings = () => {
             </FormControl>
           </FormGroup>
         )}
+        <FormGroup sx={{ mt: 2 }}>
+          <FormLabel>Theme</FormLabel>
+          <FormControl fullWidth>
+            <Select
+              labelId="theme"
+              value={theme}
+              label="Theme"
+              onChange={(e) => setTheme(e.target.value)}
+            >
+              <MenuItem value={"light"}>Light</MenuItem>
+              <MenuItem value={"dark"}>Dark</MenuItem>
+            </Select>
+          </FormControl>
+        </FormGroup>
         <div style={{ marginTop: 25 }}>
           <Button
             variant="contained"
@@ -104,6 +120,7 @@ export const ProfileSettings = () => {
                         : widgets.background.url,
                   },
                   greeting: greeting,
+                  theme: theme,
                 })
               );
               dispatch(closeSettings());

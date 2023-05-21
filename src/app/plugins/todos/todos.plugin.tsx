@@ -77,11 +77,6 @@ export const Todos = () => {
                   <ListItem
                     className={`todo` + (todo.completed ? " completed" : "")}
                     key={i}
-                    // secondaryAction={
-                    //   <IconButton edge="end" aria-label="comments" size="small">
-                    //     <AiFillCalendar />
-                    //   </IconButton>
-                    // }
                     disablePadding
                     divider
                   >

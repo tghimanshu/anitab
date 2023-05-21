@@ -6,6 +6,7 @@ export interface Profile {
     type: string;
     url: string;
   };
+  theme?: string;
 }
 if (localStorage.getItem("username")) {
   let u = localStorage.getItem("username");
@@ -19,6 +20,7 @@ const initialState: Profile = JSON.parse(
       username: "Naruto",
       greeting: "Konnichiwa, ",
       background: { type: "default", url: "./assets/background.jpg" },
+      theme: "dark",
     })
 );
 
@@ -29,6 +31,7 @@ const profileSlice = createSlice({
     updateProfile(state, action: PayloadAction<Profile>) {
       state.username = action.payload.username;
       state.greeting = action.payload.greeting;
+      state.theme = action.payload.theme;
       if (action.payload.background.type === "default") {
         state.background.type = action.payload.background.type;
         if (action.payload.username.toLowerCase().includes("gaudmire")) {

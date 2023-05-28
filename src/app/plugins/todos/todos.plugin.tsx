@@ -12,6 +12,7 @@ import {
 } from "./todos.slice";
 import { WidgetLayout } from "../../layouts/widget.layout";
 import {
+  Grid,
   IconButton,
   List,
   ListItem,
@@ -22,19 +23,38 @@ import {
   Typography,
 } from "@mui/material";
 import "./todos.plugin.scss";
+import { Settings } from "@mui/icons-material";
+import { useNavigate } from "react-router";
+import { openSettings } from "../../modals/settings/settings.slice";
 
 export const Todos = () => {
   const { todos } = useAppSelector((state) => state.todos);
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   return (
     <WidgetLayout
       title="Missions"
       actions={() => (
-        <AiOutlinePlus
-          className="todos__add"
-          onClick={() => dispatch(openAddTodo())}
-        />
+        <Grid>
+          <span
+            onClick={() => {
+              navigate("todos");
+              dispatch(openSettings());
+            }}
+          >
+            <Settings
+              sx={{
+                fontSize: "0.9rem",
+                mr: 1.5,
+              }}
+            />
+          </span>
+          <AiOutlinePlus
+            className="todos__add"
+            onClick={() => dispatch(openAddTodo())}
+          />
+        </Grid>
       )}
     >
       <div className="todos__container">

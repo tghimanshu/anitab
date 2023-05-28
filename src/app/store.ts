@@ -4,6 +4,7 @@ import notesReducer from "./plugins/notes/notes.slice";
 import bookmarkReducer from "./plugins/bookmarks/bookmarks.slice";
 import pomodoroReducer from "./plugins/pomodoro/pomodoro.slice";
 import widgetSettingReducer from "./modals/settings/pages/widget/widget.slice";
+import todosSettingReducer from "./modals/settings/pages/todo/todos-settings.slice";
 import settingsReducer from "./modals/settings/settings.slice";
 import profileReducer from "./modals/settings/pages/profile/profile.slice";
 
@@ -17,6 +18,7 @@ export const store = configureStore({
       widgets: widgetSettingReducer,
       settings: settingsReducer,
       profile: profileReducer,
+      todos: todosSettingReducer,
     }),
   }),
 });

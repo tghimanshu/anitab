@@ -10,6 +10,12 @@ import {
   FormControl,
   TextField,
 } from "@mui/material";
+import {
+  DatePicker,
+  LocalizationProvider,
+  TimePicker,
+} from "@mui/x-date-pickers";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 
 export const AddTodo = (props: { isAdd: boolean }) => {
   const dispatch = useAppDispatch();
@@ -17,6 +23,12 @@ export const AddTodo = (props: { isAdd: boolean }) => {
   const editingId = useAppSelector((state) => state.todos.isEditing);
 
   const [title, setTitle] = useState("");
+  const [dates, setDates] = useState<{
+    startDate?: string;
+    startTime?: string;
+    endDate?: string;
+    endTime?: string;
+  } | null>(null);
   // const [priority, setPriority] = useState("Gennin");
 
   useEffect(() => {
@@ -63,7 +75,7 @@ export const AddTodo = (props: { isAdd: boolean }) => {
         dispatch(closeAddTodo());
       }}
     >
-      <DialogTitle>Add Todo</DialogTitle>
+      <DialogTitle>Add Mission</DialogTitle>
       <DialogContent>
         <form
           onSubmit={editingId === undefined ? handleAddTodo : handleEditTodo}
@@ -72,15 +84,52 @@ export const AddTodo = (props: { isAdd: boolean }) => {
             <TextField
               autoFocus
               label="Todo"
-              variant="standard"
+              variant="outlined"
               value={title}
               sx={{
+                marginTop: "10px",
                 marginBottom: "10px",
               }}
               required
               onChange={(e) => setTitle(e.target.value)}
             />
           </FormControl>
+          <LocalizationProvider dateAdapter={AdapterMoment}>
+            <div>
+              <FormControl
+                sx={{
+                  marginBottom: "10px",
+                  marginRight: "10px",
+                }}
+              >
+                <DatePicker label="Start Date" />
+              </FormControl>
+              <FormControl
+                sx={{
+                  marginBottom: "10px",
+                }}
+              >
+                <TimePicker label="Start Time" />
+              </FormControl>
+            </div>
+            <div>
+              <FormControl
+                sx={{
+                  marginBottom: "10px",
+                  marginRight: "10px",
+                }}
+              >
+                <DatePicker label="Due Date" />
+              </FormControl>
+              <FormControl
+                sx={{
+                  marginBottom: "10px",
+                }}
+              >
+                <TimePicker label="Due Time" />
+              </FormControl>
+            </div>
+          </LocalizationProvider>
           <DialogActions
             sx={{
               justifyContent: "center",

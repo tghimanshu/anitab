@@ -1,12 +1,12 @@
 import {
   Modal,
-  Box,
   List,
   ListSubheader,
   ListItem,
   ListItemButton,
   ListItemText,
   Divider,
+  Grid,
 } from "@mui/material";
 import React from "react";
 import { Routes, Route, Link, Navigate, useNavigate } from "react-router-dom";
@@ -15,6 +15,7 @@ import { PomodoroSettings } from "./pages/pomodoro/pomodoro.settings";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { closeSettings } from "./settings.slice";
 import { ProfileSettings } from "./pages/profile/profile.settings";
+import { TodosSettings } from "./pages/todo/todos.settings";
 
 const modalStyle = {
   position: "absolute" as "absolute",
@@ -29,6 +30,7 @@ const modalStyle = {
   boxShadow: 24,
   display: "flex",
   // p: 4,
+  overflow: "hidden",
 };
 
 export const SettingsModal = () => {
@@ -46,14 +48,15 @@ export const SettingsModal = () => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={modalStyle}>
-        <Box
+      <Grid sx={modalStyle} container>
+        <Grid
+          item
+          xs={3}
           sx={{
-            width: 200,
             background: "black",
             height: "100%",
-            color: "white",
             overflowY: "auto",
+            color: "white",
           }}
           role="presentation"
         >
@@ -81,21 +84,36 @@ export const SettingsModal = () => {
             </ListItem>
             <Divider sx={{ background: "#555" }} />
             <ListItem disablePadding>
+              <ListItemButton component={Link} to={"todos"}>
+                <ListItemText primary={"Todos"} />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
               <ListItemButton component={Link} to={"pomodoro"}>
                 <ListItemText primary={"Pomodoro"} />
               </ListItemButton>
             </ListItem>
           </List>
-        </Box>
-        <Box sx={{ flexGrow: 1, py: 2, px: 4, overflowY: "auto" }}>
+        </Grid>
+        <Grid
+          item
+          xs={9}
+          sx={{
+            height: "100%",
+            overflowY: "auto",
+            py: 2,
+            px: 4,
+          }}
+        >
           <Routes>
             <Route path="/" element={<Navigate to={"my-profile"} replace />} />
             <Route path="/my-profile" element={<ProfileSettings />}></Route>
             <Route path="/widgets" element={<GeneralSettings />}></Route>
+            <Route path="/todos" element={<TodosSettings />}></Route>
             <Route path="/pomodoro" element={<PomodoroSettings />}></Route>
           </Routes>
-        </Box>
-      </Box>
+        </Grid>
+      </Grid>
     </Modal>
   );
 };

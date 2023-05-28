@@ -3,7 +3,7 @@ import React from "react";
 import { TodosContainer } from "../../../../plugins/todos/todos.plugin";
 import { NotesContainer } from "../../../../plugins/notes/notes.plugin";
 import { BookmarksContainer } from "../../../../plugins/bookmarks/bookmarks.plugin";
-import { PomodoroContainer } from "../../../../plugins/pomodoro/pomodor.plugin";
+import { PomodoroContainer } from "../../../../plugins/pomodoro/pomodoro.plugin";
 export const allWidgets: {
   [key: string]: {
     id: string;

@@ -6,6 +6,10 @@ export interface Todo {
   completed: boolean;
   createdDate: string;
   priority: string;
+  startDate?: string;
+  startTime?: string;
+  endDate?: string;
+  endTime?: string;
 }
 
 const initialState: {

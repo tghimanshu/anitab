@@ -19,6 +19,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "./app.scss";
 import { Modals } from "./modals/modals";
+import { AniTabCommandPalette } from "./utils/command-palette/command-palette";
 
 const ReactGridLayout = WidthProvider(RGL);
 
@@ -39,39 +40,45 @@ export const App = () => {
   }
 
   return (
-    <HashRouter>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+    <>
+      <HashRouter>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
 
-        <div
-          className="main-screen"
-          data-theme={profile.theme}
-          style={{
-            background: `url(${profile.background.url}) no-repeat center center/cover`,
-          }}
-        >
-          <Header />
-          <div className="main-content">
-            <ReactGridLayout
-              className="layout"
-              layout={widgets.map((widget) => ({
-                ...widget,
-                i: widget.id,
-              }))}
-              cols={12}
-              rowHeight={60}
-              isDroppable
-              draggableHandle=".drag-handle"
-              onLayoutChange={onChangeLayout}
-            >
-              {widgets.map((widget) => {
-                return widget.visible && allWidgets[widget.id].component();
-              })}
-            </ReactGridLayout>
+          <div
+            className="main-screen"
+            data-theme={profile.theme}
+            style={{
+              background: `url(${profile.background.url}) no-repeat center center/cover`,
+            }}
+          >
+            <Header />
+            <div className="main-content">
+              <ReactGridLayout
+                className="layout"
+                layout={widgets.map((widget) => ({
+                  ...widget,
+                  i: widget.id,
+                }))}
+                cols={12}
+                rowHeight={60}
+                isDroppable
+                draggableHandle=".drag-handle"
+                onLayoutChange={onChangeLayout}
+              >
+                {widgets.map((widget) => {
+                  return widget.visible && allWidgets[widget.id].component();
+                })}
+              </ReactGridLayout>
+            </div>
+            <Modals />
           </div>
-          <Modals />
-        </div>
-      </ThemeProvider>
-    </HashRouter>
+        </ThemeProvider>
+        <AniTabCommandPalette />
+      </HashRouter>
+      {/* Unsafe Issue created by the below package was resolve dusing the following command
+      
+      npx react-codemod rename-unsafe-lifecycles <path>*/}
+    </>
   );
 };

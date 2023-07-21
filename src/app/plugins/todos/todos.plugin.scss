@@ -25,13 +25,23 @@
     text-decoration: line-through;
   }
 
+  &__info {
+    display: flex;
+    transition: all 0.3s ease;
+    gap: 10px;
+  }
+
   &__actions {
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    display: none;
+    transition: all 0.3s ease;
+  }
+
+  &:hover &__info {
+    display: none;
   }
 
   &:hover &__actions {
-    opacity: 1;
+    display: block;
   }
 }
 

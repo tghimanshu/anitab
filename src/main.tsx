@@ -9,9 +9,9 @@ import { store } from "./app/store";
 import "./style.css";
 
 ReactDOM.createRoot(document.querySelector("#app") as HTMLElement).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <Provider store={store}>
+    <App />
+  </Provider>
+  // </React.StrictMode>
 );

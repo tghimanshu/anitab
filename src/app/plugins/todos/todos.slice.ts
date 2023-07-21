@@ -1,15 +1,34 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+export interface TodoPriority {
+  level: number;
+  name: string;
+}
 
 export interface Todo {
   index: number;
   title: string;
   completed: boolean;
   createdDate: string;
-  priority: string;
+  priority: TodoPriority;
   startDate?: string;
   startTime?: string;
   endDate?: string;
   endTime?: string;
+}
+
+if (localStorage.getItem("todos")) {
+  let data = JSON.parse(localStorage.getItem("todos") || "{}");
+  data.todos.map((todo: any) => {
+    if(typeof todo.priority === "string"){
+      todo.priority = {
+        level: 1,
+        name: todo.priority
+      }
+    }
+    return {
+      ...todo,
+    };
+  });
 }
 
 const initialState: {

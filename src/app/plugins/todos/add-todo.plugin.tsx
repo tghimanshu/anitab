@@ -8,6 +8,9 @@ import {
   DialogContent,
   DialogTitle,
   FormControl,
+  Grid,
+  MenuItem,
+  Select,
   TextField,
 } from "@mui/material";
 import {
@@ -21,15 +24,18 @@ export const AddTodo = (props: { isAdd: boolean }) => {
   const dispatch = useAppDispatch();
   const todos = useAppSelector((state) => state.todos.todos);
   const editingId = useAppSelector((state) => state.todos.isEditing);
+  const todosSettings = useAppSelector((state) => state.settings.todos);
 
   const [title, setTitle] = useState("");
-  const [dates, setDates] = useState<{
-    startDate?: string;
-    startTime?: string;
-    endDate?: string;
-    endTime?: string;
-  } | null>(null);
-  // const [priority, setPriority] = useState("Gennin");
+  // const [dates, setDates] = useState<{
+  //   startDate?: string;
+  //   startTime?: string;
+  //   endDate?: string;
+  //   endTime?: string;
+  // } | null>(null);
+  const [priority, setPriority] = useState(
+    JSON.stringify({ level: 1, name: "P1" })
+  );
 
   useEffect(() => {
     if (editingId !== undefined) {
@@ -43,7 +49,7 @@ export const AddTodo = (props: { isAdd: boolean }) => {
     const todo: Todo = {
       index: todos.length === 0 ? 1 : todos[todos.length - 1].index + 1,
       title,
-      priority: "Genin",
+      priority: JSON.parse(priority),
       completed: false,
       createdDate: new Date().toISOString(),
     };
@@ -94,41 +100,68 @@ export const AddTodo = (props: { isAdd: boolean }) => {
               onChange={(e) => setTitle(e.target.value)}
             />
           </FormControl>
+          {todosSettings.includePriority && (
+            <FormControl fullWidth>
+              <Select
+                label="Priority"
+                variant="outlined"
+                value={priority}
+                sx={{
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                }}
+                required
+                onChange={(e) => setPriority(e.target.value)}
+              >
+                <MenuItem value={JSON.stringify({ level: 1, name: "P1" })}>
+                  Priority 1
+                </MenuItem>
+                <MenuItem value={JSON.stringify({ level: 1, name: "P2" })}>
+                  Priority 2
+                </MenuItem>
+                <MenuItem value={JSON.stringify({ level: 1, name: "P3" })}>
+                  Priority 3
+                </MenuItem>
+                <MenuItem value={JSON.stringify({ level: 1, name: "P4" })}>
+                  Priority 4
+                </MenuItem>
+                <MenuItem value={JSON.stringify({ level: 1, name: "P5" })}>
+                  Priority 5
+                </MenuItem>
+              </Select>
+            </FormControl>
+          )}
           <LocalizationProvider dateAdapter={AdapterMoment}>
-            <div>
-              <FormControl
-                sx={{
-                  marginBottom: "10px",
-                  marginRight: "10px",
-                }}
-              >
-                <DatePicker label="Start Date" />
-              </FormControl>
-              <FormControl
-                sx={{
-                  marginBottom: "10px",
-                }}
-              >
-                <TimePicker label="Start Time" />
-              </FormControl>
-            </div>
-            <div>
-              <FormControl
-                sx={{
-                  marginBottom: "10px",
-                  marginRight: "10px",
-                }}
-              >
-                <DatePicker label="Due Date" />
-              </FormControl>
-              <FormControl
-                sx={{
-                  marginBottom: "10px",
-                }}
-              >
-                <TimePicker label="Due Time" />
-              </FormControl>
-            </div>
+            <Grid container spacing={2}>
+              {todosSettings.includeStartDate && (
+                <Grid item lg={6}>
+                  <FormControl fullWidth>
+                    <DatePicker label="Start Date" />
+                  </FormControl>
+                </Grid>
+              )}
+              {todosSettings.includeStartTime && (
+                <Grid item lg={6}>
+                  <FormControl fullWidth>
+                    <TimePicker label="Start Time" />
+                  </FormControl>
+                </Grid>
+              )}
+              {todosSettings.includeEndDate && (
+                <Grid item lg={6}>
+                  <FormControl fullWidth>
+                    <DatePicker label="End Date" />
+                  </FormControl>
+                </Grid>
+              )}
+              {todosSettings.includeEndTime && (
+                <Grid item lg={6}>
+                  <FormControl fullWidth>
+                    <TimePicker label="Start Time" />
+                  </FormControl>
+                </Grid>
+              )}
+            </Grid>
           </LocalizationProvider>
           <DialogActions
             sx={{

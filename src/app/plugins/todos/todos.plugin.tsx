@@ -5,6 +5,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import CalendarIcon from "@mui/icons-material/CalendarMonth";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
+  Todo,
   deleteTodo,
   openAddTodo,
   openEditTodo,
@@ -12,6 +13,7 @@ import {
 } from "./todos.slice";
 import { WidgetLayout } from "../../layouts/widget.layout";
 import {
+  Chip,
   Grid,
   IconButton,
   List,
@@ -26,11 +28,27 @@ import "./todos.plugin.scss";
 import { Settings } from "@mui/icons-material";
 import { useNavigate } from "react-router";
 import { openSettings } from "../../modals/settings/settings.slice";
+import moment from "moment";
 
 export const Todos = () => {
   const { todos } = useAppSelector((state) => state.todos);
+  const appearance = useAppSelector((state) => state.settings.todos);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const handleAddToCalendar = (todo: Todo) => {
+    switch (appearance.calendar) {
+      case "outlook":
+        return `https://outlook.live.com/calendar/0/deeplink/compose?allday=false&enddt=2023-05-21T11%3A15%3A00%2B00%3A00&path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&startdt=2023-05-21T10%3A45%3A00%2B00%3A00&subject=${encodeURIComponent(
+          todo.title
+        )}`;
+      case "google":
+      default:
+        return `https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20230521T104500Z%2F20230521T111500Z&text=${encodeURIComponent(
+          todo.title
+        )}`;
+    }
+  };
 
   return (
     <WidgetLayout
@@ -103,7 +121,7 @@ export const Todos = () => {
                     divider
                   >
                     <ListItemButton
-                      role={undefined}
+                      // role={undefined}
                       onClick={() => dispatch(toggleComplete(todo.index))}
                       dense
                     >
@@ -127,47 +145,101 @@ export const Todos = () => {
                           {todo.title}
                         </Typography>
                       </ListItemText>
+                      <div className="todo__info">
+                        {appearance.infoTexts.priority && (
+                          <Chip
+                            label={todo.priority.name}
+                            color="primary"
+                            size="small"
+                          />
+                        )}
+                        {appearance.infoTexts.startDateTime && (
+                          <Chip
+                            // label={moment().format("MMM DD")}
+                            label={
+                              `Start @ ` +
+                              moment(
+                                `${
+                                  todo.startTime
+                                    ? todo.startTime
+                                    : todo.createdDate
+                                }`
+                              ).format("HH:mm")
+                            }
+                            color="primary"
+                            size="small"
+                          />
+                        )}
+                        {appearance.infoTexts.endDatetTime && (
+                          <Chip
+                            // label={moment().format("MMM DD")}
+                            label={
+                              `Due @ ` +
+                              moment(
+                                `${
+                                  todo.endTime ? todo.endTime : todo.createdDate
+                                }`
+                              ).format("HH:mm")
+                            }
+                            color="primary"
+                            size="small"
+                          />
+                        )}
+                      </div>
                       <div className="todo__actions">
-                        <Tooltip
-                          title="Add to Calendar"
-                          placement="top"
-                          arrow={true}
-                        >
-                          <IconButton
-                            sx={todo.completed ? { color: "white" } : {}}
-                            href={`https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20230521T104500Z%2F20230521T111500Z&text=${encodeURIComponent(
-                              todo.title
-                            )}`}
-                            onClick={(e) => e.stopPropagation()}
-                            target="_blank"
+                        {appearance.quickIcons.calendar && (
+                          <Tooltip
+                            title="Add to Calendar"
+                            placement="top"
+                            arrow={true}
                           >
-                            <CalendarIcon fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Edit" placement="top" arrow={true}>
-                          <IconButton
-                            sx={todo.completed ? { color: "white" } : {}}
-                            onClick={(e) => {
-                              e.stopPropagation();
+                            <IconButton
+                              sx={todo.completed ? { color: "white" } : {}}
+                              href={handleAddToCalendar(todo)}
+                              onClick={(e) => e.stopPropagation()}
+                              target="_blank"
+                            >
+                              <CalendarIcon
+                                fontSize="small"
+                                sx={{ fontSize: "1rem" }}
+                              />
+                            </IconButton>
+                          </Tooltip>
+                        )}
+                        {appearance.quickIcons.edit && (
+                          <Tooltip title="Edit" placement="top" arrow={true}>
+                            <IconButton
+                              sx={todo.completed ? { color: "white" } : {}}
+                              onClick={(e) => {
+                                e.stopPropagation();
 
-                              dispatch(openEditTodo(todo.index));
-                            }}
-                          >
-                            <EditIcon fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Delete" placement="top" arrow={true}>
-                          <IconButton
-                            sx={todo.completed ? { color: "white" } : {}}
-                            onClick={(e) => {
-                              e.stopPropagation();
+                                dispatch(openEditTodo(todo.index));
+                              }}
+                            >
+                              <EditIcon
+                                fontSize="small"
+                                sx={{ fontSize: "1rem" }}
+                              />
+                            </IconButton>
+                          </Tooltip>
+                        )}
+                        {appearance.quickIcons.delete && (
+                          <Tooltip title="Delete" placement="top" arrow={true}>
+                            <IconButton
+                              sx={todo.completed ? { color: "white" } : {}}
+                              onClick={(e) => {
+                                e.stopPropagation();
 
-                              dispatch(deleteTodo(todo));
-                            }}
-                          >
-                            <DeleteIcon fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
+                                dispatch(deleteTodo(todo));
+                              }}
+                            >
+                              <DeleteIcon
+                                fontSize="small"
+                                sx={{ fontSize: "1rem" }}
+                              />
+                            </IconButton>
+                          </Tooltip>
+                        )}
                       </div>
                     </ListItemButton>
                   </ListItem>
@@ -262,46 +334,61 @@ export const Todos = () => {
                         </Typography>
                       </ListItemText>
                       <div className="todo__actions">
-                        <Tooltip
-                          title="Add to Calendar"
-                          placement="top"
-                          arrow={true}
-                        >
-                          <IconButton
-                            sx={todo.completed ? { color: "white" } : {}}
-                            href={`https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20230521T104500Z%2F20230521T111500Z&text=${encodeURIComponent(
-                              todo.title
-                            )}`}
-                            onClick={(e) => e.stopPropagation()}
-                            target="_blank"
+                        {appearance.quickIcons.calendar && (
+                          <Tooltip
+                            title="Add to Calendar"
+                            placement="top"
+                            arrow={true}
                           >
-                            <CalendarIcon fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Edit" placement="top" arrow={true}>
-                          <IconButton
-                            sx={todo.completed ? { color: "white" } : {}}
-                            onClick={(e) => {
-                              e.stopPropagation();
+                            <IconButton
+                              sx={todo.completed ? { color: "white" } : {}}
+                              href={`https://calendar.google.com/calendar/render?action=TEMPLATE&dates=20230521T104500Z%2F20230521T111500Z&text=${encodeURIComponent(
+                                todo.title
+                              )}`}
+                              onClick={(e) => e.stopPropagation()}
+                              target="_blank"
+                            >
+                              <CalendarIcon
+                                fontSize="small"
+                                sx={{ fontSize: "1rem" }}
+                              />
+                            </IconButton>
+                          </Tooltip>
+                        )}
+                        {appearance.quickIcons.edit && (
+                          <Tooltip title="Edit" placement="top" arrow={true}>
+                            <IconButton
+                              sx={todo.completed ? { color: "white" } : {}}
+                              onClick={(e) => {
+                                e.stopPropagation();
 
-                              dispatch(openEditTodo(todo.index));
-                            }}
-                          >
-                            <EditIcon fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Delete" placement="top" arrow={true}>
-                          <IconButton
-                            sx={todo.completed ? { color: "white" } : {}}
-                            onClick={(e) => {
-                              e.stopPropagation();
+                                dispatch(openEditTodo(todo.index));
+                              }}
+                            >
+                              <EditIcon
+                                fontSize="small"
+                                sx={{ fontSize: "1rem" }}
+                              />
+                            </IconButton>
+                          </Tooltip>
+                        )}
+                        {appearance.quickIcons.delete && (
+                          <Tooltip title="Delete" placement="top" arrow={true}>
+                            <IconButton
+                              sx={todo.completed ? { color: "white" } : {}}
+                              onClick={(e) => {
+                                e.stopPropagation();
 
-                              dispatch(deleteTodo(todo));
-                            }}
-                          >
-                            <DeleteIcon fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
+                                dispatch(deleteTodo(todo));
+                              }}
+                            >
+                              <DeleteIcon
+                                fontSize="small"
+                                sx={{ fontSize: "1rem" }}
+                              />
+                            </IconButton>
+                          </Tooltip>
+                        )}
                       </div>
                     </ListItemButton>
                   </ListItem>

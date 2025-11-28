@@ -11,6 +11,16 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { Bookmark, addBookmark, closeAddBookmark } from "./bookmarks.slice";
 
+/**
+ * Dialog for adding a new bookmark.
+ *
+ * This component displays a modal with a form to enter the title and URL
+ * of a new bookmark.
+ *
+ * @param {object} props - The component props.
+ * @param {boolean} props.isAdd - Whether the dialog is currently open.
+ * @returns {JSX.Element} The rendered Add Bookmark dialog.
+ */
 export const AddBookmark = (props: { isAdd: boolean }) => {
   const dispatch = useAppDispatch();
   const [title, setTitle] = useState("");
@@ -19,6 +29,14 @@ export const AddBookmark = (props: { isAdd: boolean }) => {
     (state) => state.bookmarks.bookmarks
   );
 
+  /**
+   * Handles the submission of the new bookmark form.
+   *
+   * Creates a new bookmark object and dispatches an action to add it to the store.
+   * Then resets the form and closes the dialog.
+   *
+   * @param {object} event - The form submission event.
+   */
   const handleAddBookmark = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     const bookmark: Bookmark = {

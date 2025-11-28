@@ -17,6 +17,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
 import "./notes.plugin.scss";
 
+/**
+ * Customized Accordion component.
+ */
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
@@ -29,6 +32,9 @@ const Accordion = styled((props: AccordionProps) => (
   },
 }));
 
+/**
+ * Customized AccordionSummary component.
+ */
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
   <MuiAccordionSummary
     expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
@@ -51,14 +57,31 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
   },
 }));
 
+/**
+ * Customized AccordionDetails component.
+ */
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   padding: theme.spacing(2),
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
+/**
+ * The Notes widget component.
+ *
+ * This component displays a list of notes using an accordion layout.
+ * Users can expand a note to view its details, edit the note, or delete it.
+ *
+ * @returns {JSX.Element} The rendered Notes widget.
+ */
 export const Notes = () => {
   const [expanded, setExpanded] = React.useState<number | false>(false);
 
+  /**
+   * Handles the expansion of an accordion panel.
+   *
+   * @param {number} panel - The index of the panel being toggled.
+   * @returns {Function} Event handler function.
+   */
   const handleChange =
     (panel: number) => (event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false);
@@ -134,6 +157,11 @@ export const Notes = () => {
   );
 };
 
+/**
+ * Container for the Notes component.
+ *
+ * @returns {JSX.Element} The Notes component.
+ */
 export const NotesContainer = () => {
   return <Notes />;
 };

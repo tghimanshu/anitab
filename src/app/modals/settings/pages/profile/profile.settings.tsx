@@ -13,6 +13,15 @@ import { closeSettings } from "../../settings.slice";
 import { updateProfile } from "./profile.slice";
 import { useNavigate } from "react-router";
 
+/**
+ * The Profile Settings component.
+ *
+ * This component provides a form for users to update their profile information,
+ * including their username, a custom greeting, and the background image of the
+ * new tab page.
+ *
+ * @returns {JSX.Element} The rendered Profile settings page.
+ */
 export const ProfileSettings = () => {
   const [username, setUsername] = useState("");
   const [greeting, setGreeting] = useState("");
@@ -24,12 +33,20 @@ export const ProfileSettings = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  /**
+   * Initializes the local state with the current values from the Redux store.
+   */
   useEffect(() => {
     setUsername(widgets.username);
     setGreeting(widgets.greeting);
     setBackground(widgets.background);
   }, [widgets]);
 
+  /**
+   * Handles changes to the username input field.
+   *
+   * @param {any} e - The change event.
+   */
   const handleChange = (e: any) => {
     setUsername(e.target.value);
   };

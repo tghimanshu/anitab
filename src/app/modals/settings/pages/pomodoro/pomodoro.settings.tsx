@@ -9,6 +9,15 @@ import { setTimers } from "../../../../plugins/pomodoro/pomodoro.slice";
 import { closeSettings } from "../../settings.slice";
 import { useNavigate } from "react-router";
 
+/**
+ * The Pomodoro Settings component.
+ *
+ * This component allows the user to configure the duration of the work and break
+ * timers for the Pomodoro plugin. It provides a UI with time pickers for setting
+ * minutes and seconds.
+ *
+ * @returns {JSX.Element} The rendered Pomodoro settings page.
+ */
 export const PomodoroSettings = () => {
   const [workTime, setWorkTime] = useState<Moment>(moment());
   const [breakTime, setBreakTime] = useState<Moment>(moment());
@@ -17,6 +26,12 @@ export const PomodoroSettings = () => {
   const navigate = useNavigate();
   const pomodoro = useAppSelector((state) => state.pomodoro);
 
+  /**
+   * Initializes the local state with the current values from the Redux store.
+   *
+   * It converts the time in seconds from the store to a `moment` object for
+   * the time pickers.
+   */
   useEffect(() => {
     setWorkTime(
       moment(

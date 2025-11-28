@@ -31,10 +31,26 @@ const modalStyle = {
   // p: 4,
 };
 
+/**
+ * The Settings Modal component.
+ *
+ * This component displays a modal dialog for configuring application settings.
+ * It contains a sidebar navigation to switch between different settings pages
+ * (Profile, Widget, Pomodoro) and a main content area where the selected
+ * settings page is rendered.
+ *
+ * It uses `react-router-dom` for handling internal navigation within the modal.
+ *
+ * @returns {JSX.Element} The rendered settings modal.
+ */
 export const SettingsModal = () => {
   const settings = useAppSelector((state) => state.settings.settings);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  /**
+   * Closes the settings modal and resets the URL path.
+   */
   const handleClose = () => {
     navigate("");
     dispatch(closeSettings());

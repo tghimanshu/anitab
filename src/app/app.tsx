@@ -18,6 +18,19 @@ import { HashRouter } from "react-router-dom";
 
 const ReactGridLayout = WidthProvider(RGL);
 
+/**
+ * The main application component.
+ *
+ * This component sets up the layout of the application, including the background,
+ * header, and the grid of widgets. It uses `react-grid-layout` to manage the
+ * positioning of widgets and handles the display of modal dialogs for adding
+ * todos, notes, and bookmarks.
+ *
+ * It uses Redux for state management to retrieve user preferences (profile background)
+ * and widget configurations.
+ *
+ * @returns {JSX.Element} The rendered application component.
+ */
 export const App = () => {
   const dispatch = useAppDispatch();
   const isAddTodo = useAppSelector((state) => state.todos.isAdd);
@@ -27,6 +40,14 @@ export const App = () => {
   const widgets = useAppSelector((state) => state.settings.widgets);
   const profile = useAppSelector((state) => state.settings.profile);
 
+  /**
+   * Handler for layout changes in the grid.
+   *
+   * Dispatches an action to update the widget layout in the Redux store
+   * whenever the user rearranges or resizes widgets.
+   *
+   * @param {Layout[]} newLayout - The new layout configuration provided by `react-grid-layout`.
+   */
   function onChangeLayout(newLayout: Layout[]) {
     dispatch(updateLayout(newLayout.map((v) => ({ ...v, id: v.i }))));
   }

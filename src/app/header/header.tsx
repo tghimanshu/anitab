@@ -16,6 +16,17 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import { openSettings } from "../modals/settings/settings.slice";
 import { useNavigate } from "react-router";
 
+/**
+ * The Header component of the application.
+ *
+ * It displays a greeting with the username, the current time and date,
+ * and a user avatar with a dropdown menu. The menu allows access to account
+ * settings and general application settings.
+ *
+ * It uses `moment.js` to handle real-time clock updates.
+ *
+ * @returns {JSX.Element} The rendered Header component.
+ */
 export const Header = () => {
   const [time, setTime] = useState("00:00:00");
   const [date, setDate] = useState("");
@@ -28,14 +39,26 @@ export const Header = () => {
 
   const open = Boolean(anchorEl);
 
+  /**
+   * Handles the click event on the avatar to open the user menu.
+   *
+   * @param {React.MouseEvent<HTMLElement>} event - The click event.
+   */
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
+  /**
+   * Closes the user menu.
+   */
   const handleClose = () => {
     setAnchorEl(null);
   };
 
+  /**
+   * Sets up the clock interval to update the time every second
+   * and sets the initial date.
+   */
   useEffect(() => {
     setDate(moment().format("MM/DD/YYYY"));
     setInterval(() => {

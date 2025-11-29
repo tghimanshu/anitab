@@ -9,6 +9,18 @@ import { changeActiveTimer } from "./pomodoro.slice";
 import { openSettings } from "../../modals/settings/settings.slice";
 import { useNavigate } from "react-router";
 
+/**
+ * The Pomodoro widget component.
+ *
+ * This component displays a countdown timer for the Pomodoro technique.
+ * Users can switch between "Work" and "Break" modes, start/pause the timer,
+ * and access settings to configure timer durations.
+ *
+ * It adapts the size of the timer circle based on the widget's dimensions.
+ * It plays a notification sound when the timer completes.
+ *
+ * @returns {JSX.Element} The rendered Pomodoro widget.
+ */
 export const Pomodoro = () => {
   const [size, setSize] = useState(150);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -24,6 +36,9 @@ export const Pomodoro = () => {
   const pomodoro = useAppSelector((state) => state.pomodoro);
   const navigate = useNavigate();
 
+  /**
+   * Resizes the countdown timer based on the container size.
+   */
   useEffect(() => {
     setSize(
       elem.current!.offsetHeight > elem.current!.offsetWidth
@@ -32,11 +47,20 @@ export const Pomodoro = () => {
     );
   }, [pomodoroWidget]);
 
+  /**
+   * Handles click events on the timer to toggle play/pause or reset after completion.
+   */
   const handleTimerClick = () => {
     !isComplete && setIsPlaying((v) => !v);
     isComplete && setKey((k) => k + 1);
     setIsComplete(false);
   };
+
+  /**
+   * Handles timer completion.
+   *
+   * Stops the timer and plays a notification sound.
+   */
   const handleComplete = () => {
     setIsPlaying(false);
     audio.play();
@@ -149,6 +173,12 @@ export const Pomodoro = () => {
   );
 };
 
+/**
+ * Container for the Pomodoro component.
+ *
+ * @param {any} props - Component props.
+ * @returns {JSX.Element} The Pomodoro component.
+ */
 export const PomodoroContainer = (props: any) => {
   return <Pomodoro />;
 };

@@ -7,6 +7,17 @@ import "./bookmarks.plugin.scss";
 import { WidgetLayout } from "../../layouts/widget.layout";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+/**
+ * The Bookmarks widget component.
+ *
+ * This component displays a list of bookmarks saved by the user. Each bookmark
+ * is rendered with its favicon and title. Users can click on a bookmark to open it
+ * in a new tab, or delete it.
+ *
+ * It uses the `WidgetLayout` to provide a consistent header and actions.
+ *
+ * @returns {JSX.Element} The rendered Bookmarks widget.
+ */
 export const Bookmarks = () => {
   const bookmarks = useAppSelector((state) => state.bookmarks.bookmarks);
   const dispatch = useAppDispatch();
@@ -79,6 +90,11 @@ export const Bookmarks = () => {
   );
 };
 
+/**
+ * Container for the Bookmarks component.
+ *
+ * @returns {JSX.Element} The Bookmarks component.
+ */
 export const BookmarksContainer = () => {
   return <Bookmarks />;
 };

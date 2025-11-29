@@ -21,6 +21,15 @@ import {
 } from "@mui/material";
 import "./todos.plugin.scss";
 
+/**
+ * The Todos widget component.
+ *
+ * This component displays a list of todos (missions). It categorizes them into
+ * "Today" and "Older" based on their creation date. Completed todos are visually
+ * distinguished. Users can add new todos, mark them as complete, edit them, or delete them.
+ *
+ * @returns {JSX.Element} The rendered Todos widget.
+ */
 export const Todos = () => {
   const { todos } = useAppSelector((state) => state.todos);
   const dispatch = useAppDispatch();
@@ -252,6 +261,11 @@ export const Todos = () => {
   );
 };
 
+/**
+ * Container for the Todos component.
+ *
+ * @returns {JSX.Element} The Todos component.
+ */
 export const TodosContainer = () => {
   return <Todos />;
 };

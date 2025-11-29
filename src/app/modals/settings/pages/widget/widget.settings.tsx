@@ -9,10 +9,24 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../../hooks";
 import { toggleWidget } from "./widget.slice";
 
+/**
+ * The General Settings (Widget Settings) component.
+ *
+ * This component allows users to toggle the visibility of various widgets
+ * on the main dashboard. It renders a list of switches corresponding to
+ * each available widget.
+ *
+ * @returns {JSX.Element} The rendered Widget settings page.
+ */
 export const GeneralSettings = () => {
   const widgets = useAppSelector((state) => state.settings.widgets);
   const dispatch = useAppDispatch();
 
+  /**
+   * Handles the toggling of a widget's visibility.
+   *
+   * @param {string} id - The ID of the widget to toggle.
+   */
   const handleChange = (id: string) => {
     dispatch(toggleWidget(id));
   };

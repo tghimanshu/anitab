@@ -4,6 +4,13 @@ import { TodosContainer } from "../../../../plugins/todos/todos.plugin";
 import { NotesContainer } from "../../../../plugins/notes/notes.plugin";
 import { BookmarksContainer } from "../../../../plugins/bookmarks/bookmarks.plugin";
 import { PomodoroContainer } from "../../../../plugins/pomodoro/pomodor.plugin";
+
+/**
+ * Registry of all available widgets with their configuration.
+ *
+ * Each entry includes the widget's ID, title, default visibility, component to render,
+ * and default grid layout properties (dimensions, position).
+ */
 export const allWidgets: {
   [key: string]: {
     id: string;
@@ -84,18 +91,53 @@ export const allWidgets: {
   },
 };
 
+/**
+ * Interface representing the state and layout configuration of a widget.
+ */
 export interface Widget {
+  /**
+   * Unique identifier for the widget.
+   */
   id: string;
+  /**
+   * Internal identifier used by react-grid-layout (optional).
+   */
   i?: string;
+  /**
+   * Display title of the widget.
+   */
   title: string;
+  /**
+   * Whether the widget is currently visible on the dashboard.
+   */
   visible: boolean;
+  /**
+   * Minimum width of the widget in grid units.
+   */
   minW: number;
+  /**
+   * Minimum height of the widget in grid units.
+   */
   minH: number;
+  /**
+   * Current width of the widget in grid units.
+   */
   w: number;
+  /**
+   * Current height of the widget in grid units.
+   */
   h: number;
+  /**
+   * Current X position of the widget in grid units.
+   */
   x: number;
+  /**
+   * Current Y position of the widget in grid units.
+   */
   y: number;
 }
+
+// Migrate legacy "layout" from localStorage to "widgets" object.
 if (localStorage.getItem("layout")) {
   let data: {
     i: string;
@@ -136,6 +178,12 @@ const localLayout: Widget[] = JSON.parse(
   y: v.y,
 }));
 
+/**
+ * The initial state of the widgets.
+ *
+ * It combines the default configuration (`allWidgets`) with any persisted layout
+ * information found in `localStorage`.
+ */
 const initialState: Widget[] = Object.values(
   localLayout.length !== 0 ? localLayout : allWidgets
 ).map((v) => {
@@ -152,14 +200,31 @@ const initialState: Widget[] = Object.values(
   };
 });
 
+/**
+ * Redux slice for managing widget settings and layout.
+ *
+ * Handles actions for toggling widget visibility and updating their layout positions.
+ */
 const widgetsSettingSlice = createSlice({
   name: "widgetSettings",
   initialState,
   reducers: {
+    /**
+     * Toggles the visibility of a widget.
+     *
+     * @param {Widget[]} state - The current state.
+     * @param {PayloadAction<string>} action - The action containing the widget ID.
+     */
     toggleWidget: (state, action: PayloadAction<string>) => {
       const i = state.findIndex((todo) => todo.id === action.payload);
       state[i].visible = !state[i].visible;
     },
+    /**
+     * Updates the layout (position and size) of the widgets.
+     *
+     * @param {Widget[]} state - The current state.
+     * @param {PayloadAction<Partial<Widget>[]>} action - The action containing the new layout data.
+     */
     updateLayout: (state, action: PayloadAction<Partial<Widget>[]>) => {
       for (let layout of state) {
         if (layout.visible) {

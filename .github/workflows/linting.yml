@@ -1,6 +1,10 @@
 # https://www.youtube.com/watch?v=xUJoeOC1t0M
 name: Lint
 on: pull_request
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
 jobs:
   build:
     name: Lint App

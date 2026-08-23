@@ -10,7 +10,7 @@
     "build": "tsc && vite build"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.233",
+    "@types/chrome": "^0.2.6",
     "@types/lodash": "^4.17.25",
     "@types/react": "^19.2.18",
     "@types/react-beautiful-dnd": "^13.1.4",

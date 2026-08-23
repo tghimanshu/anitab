@@ -29,7 +29,7 @@
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.18.0",
     "@mui/material": "^5.18.0",
-    "@mui/x-date-pickers": "^6.4.0",
+    "@mui/x-date-pickers": "^9.11.0",
     "@radix-ui/react-dialog": "^1.0.3",
     "@reduxjs/toolkit": "^1.9.5",
     "lodash": "^4.18.1",
